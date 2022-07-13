@@ -52,6 +52,8 @@ PROGRAMAS_PARA_INSTALAR=(
   code
   git
   wget
+  wike
+  typora
   ubuntu-restricted-extras
 )
 
@@ -71,3 +73,59 @@ for nome_do_programa in ${PROGRAMAS_PARA_INSTALAR[@]}; do
 done
 
 }
+## Instalando pacotes Flatpak ##
+install_flatpaks(){
+
+  echo -e "${VERDE}[INFO] - Instalando pacotes flatpak${SEM_COR}"
+
+flatpak install flathub com.obsproject.Studio -y
+flatpak install flathub com.spotify.Client -y
+flatpak install flathub org.freedesktop.Piper -y
+flatpak install flathub org.chromium.Chromium -y
+flatpak install flathub org.qbittorrent.qBittorrent -y
+flatpak install flathub org.flameshot.Flameshot -y
+}
+
+
+## Instalando pacotes Snap ##
+
+install_snaps(){
+
+echo -e "${VERDE}[INFO] - Instalando pacotes snap${SEM_COR}"
+
+sudo snap install bitwarden
+
+}
+
+# -------------------------------------------------------------------------- #
+# ----------------------------- PÓS-INSTALAÇÃO ----------------------------- #
+
+## Finalização, atualização e limpeza##
+
+system_clean(){
+
+apt_update -y
+flatpak update -y
+sudo apt autoclean -y
+sudo apt autoremove -y
+}
+
+# -------------------------------------------------------------------------------- #
+# -------------------------------EXECUÇÃO----------------------------------------- #
+
+travas_apt
+testes_internet
+travas_apt
+apt_update
+travas_apt
+add_archi386
+just_apt_update
+install_debs
+install_flatpaks
+install_snaps
+apt_update
+system_clean
+
+## finalização
+
+  echo -e "${VERDE}[INFO] - Script finalizado, instalação concluída! :)${SEM_COR}"
